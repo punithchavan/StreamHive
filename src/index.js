@@ -1,6 +1,7 @@
 // require("dotenv").config(); //this works but no consistency in the codebase, so we will use import instead
 import dotenv from "dotenv";  
 import connectDB from "./db/index.js";
+import app from "./app.js";
 
 dotenv.config({
     path: "./env"
@@ -20,47 +21,6 @@ connectDB()
 .catch((error)=>{
     console.log("Express connection failed", error);
 })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
