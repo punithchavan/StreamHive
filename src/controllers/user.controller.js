@@ -3,7 +3,9 @@ import ApiError from "../utils/ApiError.js";
 import {User} from "../models/user.model.js";
 import ApiResponse from "../utils/ApiResponse.js";
 import jwt from "jsonwebtoken";
-import uploudOnCloudinary from "../utils/cloudinary.js";
+import uploadOnCloudinary from "../utils/cloudinary.js";
+import {deleteCloudinaryImage, deleteLocalFile} from "../utils/deleteImage.js";
+
 
 const generateAccessAndRefreshTokens = async (userId) =>{
     try{
@@ -63,8 +65,8 @@ const registerUser = asyncHandler(async (req,res) =>{
         throw new ApiError(400, "Avatar is required")
     }
 
-    const avatar = await uploadToCloudinary(avatarLocalPath);
-    const coverImage = await uploadToCloudinary(coverImageLocalPath);
+    const avatar = await uploadOnCloudinary(avatarLocalPath);
+    const coverImage = await uploadOnCloudinary(coverImageLocalPath);
 
     if(!avatar) {
         throw new ApiError(400, "Avatar file is required")
@@ -72,8 +74,14 @@ const registerUser = asyncHandler(async (req,res) =>{
 
     const user = await User.create({
         fullName,
-        avatar: avatar.url,
-        coverImage: coverImage?.url || "",
+        avatar: {
+            url: avatar.secure.url,
+            public_id: avatar.public_id,
+        },
+        coverImage: {
+            url: coverImage?.secure?.url || "",
+            public_id: coverImage?.public_id || "",
+        },
         email,
         password,
         username,
@@ -283,21 +291,42 @@ const updateUserAvatar = asyncHandler(async (req,res)=>{
         throw new ApiError(400, "Avatar file is missing")
     }
 
-    const avatar = await uploudOnCloudinary(avatarLocalPath)
+    const avatar = await uploadOnCloudinary(avatarLocalPath)
 
-    if(!avatar.url){
+    deleteLocalFile(avatarLocalPath);
+
+    if(!avatar?.secure_url || !avatar?.public_id){
         throw new ApiError(400, "Avatar upload error")
     }
 
-    const user = await User.findByIdAndUpdate(
-        req.user?._id,
-        {
-            $set: {
-                avatar: avatar.url
-            }
-        },
-        {new: true}
-    ).select("-password -refreshToken")
+    // const user = await User.findByIdAndUpdate(
+    //     req.user?._id,
+    //     {
+    //         $set: {
+    //             avatar: avatar.url
+    //         }
+    //     },
+    //     {new: true}
+    // ).select("-password -refreshToken")
+
+    const user = await User.findById(req.user?._id);
+    if(!user) {
+        throw new ApiError(404, "User not found")
+    }
+
+    //delete old avatar image from cloudinary
+    if(user.avatar?.public_id) {
+        await deleteCloudinaryImage(user.avatar.public_id);
+    }
+
+    user.avatar = {
+        url: avatar.secure_url,
+        public_id: avatar.public_id,
+    };
+
+    await user.save({validateBeforeSave: false});
+
+    const updatedUser = await User.findById(user._id).select("-password -refreshToken");
 
     return res
     .status(200)
@@ -310,21 +339,41 @@ const updateUserCoverImage = asyncHandler(async (req,res)=>{
         throw new ApiError(400, "Cover image file is missing")
     }
 
-    const coverImage = await uploudOnCloudinary(coverImageLocalPath)
+    const coverImage = await uploadOnCloudinary(coverImageLocalPath)
 
-    if(!coverImage.url){
+    deleteLocalFile(coverImageLocalPath);
+
+    if(!coverImage.secure_url || !coverImage.public_id){
         throw new ApiError(400, "Cover image upload error")
     }
 
-    const user = await User.findByIdAndUpdate(
-        req.user?._id,
-        {
-            $set: {
-                coverImage: coverImage.url
-            }
-        },
-        {new: true}
-    ).select("-password -refreshToken")
+    // const user = await User.findByIdAndUpdate(
+    //     req.user?._id,
+    //     {
+    //         $set: {
+    //             coverImage: coverImage.url
+    //         }
+    //     },
+    //     {new: true}
+    // ).select("-password -refreshToken")
+
+    const user = await User.findById(req.user?._id);
+    if(!user) {
+        throw new ApiError(404, "User not found")
+    }
+
+    if(user.coverImage?.public_id) {
+        await deleteCloudinaryImage(user.coverImage.public_id);
+    }
+
+    user.coverImage = {
+        url: coverImage.secure_url,
+        public_id: coverImage.public_id,
+    };
+
+    await user.save({validateBeforeSave: false});
+
+    const updatedUser = await User.findById(user._id).select("-password -refreshToken");
 
     return res
     .status(200)
