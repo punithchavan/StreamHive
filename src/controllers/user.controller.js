@@ -55,6 +55,8 @@ const registerUser = asyncHandler(async (req,res) =>{
     // console.log("req.files: ", req.files);
 
     const avatarLocalPath = req.files?.avatar[0]?.path;
+
+    // console.log("avatarLocalPath: ", avatarLocalPath);
     // const coverImageLocalPath = req.files?.coverImage[0]?.path;
 
     let coverImageLocalPath;
@@ -69,18 +71,22 @@ const registerUser = asyncHandler(async (req,res) =>{
     const avatar = await uploadOnCloudinary(avatarLocalPath);
     const coverImage = await uploadOnCloudinary(coverImageLocalPath);
 
-    if(!avatar) {
+    // console.log("avatar: ", avatar);
+    // console.log("avatar.secure_url: ", avatar?.secure_url);
+    // console.log("avatar.public_id: ", avatar?.public_id);
+
+    if(!avatar || !avatar.url || !avatar.public_id) {
         throw new ApiError(400, "Avatar file is required")
     }
 
     const user = await User.create({
         fullName,
         avatar: {
-            url: avatar.secure.url,
-            public_id: avatar.public_id,
+            url: avatar?.url,
+            public_id: avatar?.public_id,
         },
         coverImage: {
-            url: coverImage?.secure?.url || "",
+            url: coverImage?.url || "",
             public_id: coverImage?.public_id || "",
         },
         email,
@@ -171,8 +177,8 @@ const logoutUser = asyncHandler(async (req,res) =>{
     await User.findByIdAndUpdate(
         req.user._id,
         {
-            $set: {
-                refreshToken: undefined
+            $unset: {
+                refreshToken: 1
             }
         },
         {
