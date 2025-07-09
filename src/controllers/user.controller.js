@@ -5,7 +5,7 @@ import ApiResponse from "../utils/ApiResponse.js";
 import jwt from "jsonwebtoken";
 import uploadOnCloudinary from "../utils/cloudinary.js";
 import {deleteCloudinaryImage, deleteLocalFile} from "../utils/deleteImage.js";
-import { subscribe } from "diagnostics_channel";
+import mongoose from "mongoose";
 
 
 const generateAccessAndRefreshTokens = async (userId) =>{
