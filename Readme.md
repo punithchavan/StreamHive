@@ -94,8 +94,8 @@ POST   /api/playlist/:playlistId/video/:videoId
 #Full list of routes can be found in the routes directory.
 
 ## 🔧 Setup Instructions
-git clone https://github.com/punithchavan/backend-project.git
-cd backend-project
+git clone https://github.com/punithchavan/StreamHive.git
+cd StreamHive
 npm install
 
 ## Set up .env file:
