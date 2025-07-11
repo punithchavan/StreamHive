@@ -105,28 +105,7 @@ cd StreamHive
 
 npm install
 
-### 3. Set up .env file:
-
-PORT=5000
-
-MONGODB_URI=your_mongodb_connection
-
-ACCESS_TOKEN_SECRET=your_secret
-
-REFRESH_TOKEN_SECRET=your_refresh_secret
-
-ACCESS_TOKEN_EXPIRY=15m
-
-REFRESH_TOKEN_EXPIRY=7d
-
-CLOUDINARY_CLOUD_NAME=your_cloud_name
-
-CLOUDINARY_API_KEY=your_api_key
-
-CLOUDINARY_API_SECRET=your_api_secret
-
-
-### 4. Run the Server:
+### 3. Run the Server:
 npm run dev
 
 ## Folder Structure
