@@ -61,9 +61,9 @@ A great deal of effort has gone into designing and developing this project, and 
 
 ---
 
-## 📸 ER Diagram
+## 📸 ER Diagram: View on Eraser.io
 
-[🔗 Click here to view the ER Diagram on Eraser.io]([https://app.eraser.io/workspace/your-eraser-model-link](https://app.eraser.io/workspace/YtPqZ1VogxGy1jzIDkzj))
+
 
 ---
 
@@ -91,14 +91,16 @@ GET    /api/tweets/:id
 POST   /api/playlist
 POST   /api/playlist/:playlistId/video/:videoId
 
-#Full list of routes can be found in the routes directory.
+# Full list of routes can be found in the routes directory.
 
 ## 🔧 Setup Instructions
+
 git clone https://github.com/punithchavan/StreamHive.git
 cd StreamHive
 npm install
 
 ## Set up .env file:
+
 PORT=5000
 MONGODB_URI=your_mongodb_connection
 ACCESS_TOKEN_SECRET=your_secret
