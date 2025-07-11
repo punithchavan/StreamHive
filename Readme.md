@@ -61,7 +61,7 @@ A great deal of effort has gone into designing and developing this project, and 
 
 ---
 
-## 📸 ER Diagram: [View on Eraser.io](https://app.eraser.io/workspace/YtPqZ1VogxGy1jzIDkzj)
+## 📸 ER Diagram: [[View on Eraser.io](https://app.eraser.io/workspace/YtPqZ1VogxGy1jzIDkzj)](https://app.eraser.io/workspace/czLtukFVBHsuC1nazGkg)
 
 
 
