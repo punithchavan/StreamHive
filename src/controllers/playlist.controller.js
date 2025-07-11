@@ -1,8 +1,8 @@
 import mongoose, { isValidObjectId } from "mongoose";
 import { Playlist } from "../models/playlist.model.js"
-import { ApiError } from "../utils/ApiError.js"
-import { ApiResponse } from "../utils/ApiResponse.js"
-import { asyncHandler } from "../utils/asyncHandler.js"
+import  asyncHandler  from "../utils/asyncHandler.js";
+import  ApiError  from "../utils/ApiError.js";
+import  ApiResponse  from "../utils/ApiResponse.js";
 import { User } from "../models/user.model.js"  
 
 const createPlaylist = asyncHandler(async (req, res)=>{
@@ -140,7 +140,7 @@ const removeVideoFromPlaylist = asyncHandler(async (req,res)=>{
     .json(new ApiResponse(200, "Video removed from playlist successfully", playlist));
 })
 
-const deletPlaylist = asyncHandler(async (req,res)=>{
+const deletePlaylist = asyncHandler(async (req,res)=>{
     const { playlistId } = req.params;
     const userId = req.user._id;
 
@@ -197,7 +197,7 @@ export {
     getPlaylistById,
     addVideoToPlaylist,
     removeVideoFromPlaylist,
-    deletPlaylist,
+    deletePlaylist,
     updatePlaylist
 }
 

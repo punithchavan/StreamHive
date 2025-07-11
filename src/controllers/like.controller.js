@@ -1,10 +1,10 @@
 import mongoose, { isValidObjectId } from "mongoose";
 import { Like } from "../models/like.model.js";
-import {ApiError} from "../utils/ApiError.js"
-import {ApiResponse} from "../utils/ApiResponse.js"
-import {asyncHandler} from "../utils/asyncHandler.js"
+import  asyncHandler  from "../utils/asyncHandler.js";
+import  ApiError  from "../utils/ApiError.js";
+import  ApiResponse  from "../utils/ApiResponse.js";
 
-const toggleVideoLike = asyncHanlder(async (req,res)=>{
+const toggleVideoLike = asyncHandler(async (req,res)=>{
     const { videoId } = req.params;
     const userId = req.user._id;
 
@@ -78,7 +78,7 @@ const toggleCommentLike = asyncHandler(async (req,res)=>{
     .json(new ApiResponse(200, message, newLike))
 })
 
-const toggleTweetLike = asyncHanlder(async (req,res)=>{
+const toggleTweetLike = asyncHandler(async (req,res)=>{
     const { tweetId } = req.params;
     const userId = req.user._id;
 
