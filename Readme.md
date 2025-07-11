@@ -91,15 +91,21 @@ GET    /api/tweets/:id
 POST   /api/playlist
 POST   /api/playlist/:playlistId/video/:videoId
 
-# Full list of routes can be found in the routes directory.
+### Full list of routes can be found in the routes directory.
 
 ## 🔧 Setup Instructions
 
+### 1. Clone the Repository
+
 git clone https://github.com/punithchavan/StreamHive.git
+
 cd StreamHive
+
+### 2. Install Dependencies
+
 npm install
 
-## Set up .env file:
+### 3. Set up .env file:
 
 PORT=5000
 MONGODB_URI=your_mongodb_connection
@@ -111,7 +117,7 @@ CLOUDINARY_CLOUD_NAME=your_cloud_name
 CLOUDINARY_API_KEY=your_api_key
 CLOUDINARY_API_SECRET=your_api_secret
 
-## Run the Server:
+### 4. Run the Server:
 npm run dev
 
 ## Folder Structure
@@ -129,12 +135,19 @@ npm run dev
 
 ## 💡 Learning Highlights
 
-1)Real-world JWT & refresh token workflow
-2)Modular route/controller/services organization
-3)Secure file handling with Multer
-4)Cloudinary media handling
-5)Mongoose aggregate & populate usage
-6)Error handling, response formatting, and clean code practices
+🔐 Real-world JWT + Refresh Token workflow
+
+🗂️ Modular structure (routes/controllers/middleware)
+
+☁️ Cloudinary file uploads (video/image)
+
+🧠 Mongoose aggregate, populate, and schema design
+
+⚠️ Error handling and clean response formatting
+
+📁 File handling using Multer
+
+🔄 Like/Comment/Subscribe feature logic
 
 ## ⭐ Final Note
 
